@@ -1,0 +1,64 @@
+Link: https://leetcode.com/problems/last-stone-weight/
+Topic: Last Stone Weight
+Description: We have a collection of stones, each stone has a positive integer weight.
+
+Each turn, we choose the two heaviest stones and smash them together.  Suppose the stones have weights x and y with x <= y.  The result of this smash is:
+
+If x == y, both stones are totally destroyed;
+If x != y, the stone of weight x is totally destroyed, and the stone of weight y has new weight y-x.
+At the end, there is at most 1 stone left.  Return the weight of this stone (or 0 if there are no stones left.)
+
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        //create priority queue in desc order
+ ArrayList<Integer> list = new ArrayList<Integer>(); 
+        for(int ele : stones)
+            list.add(ele);
+        
+        //sort the list once
+        Collections.sort(list, Collections.reverseOrder());
+        
+        while(list.size() >=1)
+        {
+            //if only one ele, return it
+            if(list.size()==1)
+                return list.get(0);
+  
+            /*Note: For both first_max and sec_max, remove is done on 0th index,
+            once we remove the 1st index ele becomes oth index ele
+            */           
+            int first_max = list.remove(0);
+            int sec_max = list.remove(0);
+            
+            if(first_max != sec_max)
+            list.add(first_max-sec_max);
+          
+            //Sort the list after list.add(first_max-sec_max)
+          Collections.sort(list, Collections.reverseOrder());   
+       }        
+        return 0;
+    }
+
+    public int lastStoneWeight1(int[] stones) {
+        //create priority queue in desc order
+        PriorityQueue<Integer> q = new PriorityQueue<Integer>(Collections.reverseOrder());
+        for(int ele : stones)
+            q.add(ele);
+        
+       
+        while(q.size()>=1)
+        {
+            if(q.size()==1)
+            return q.peek();
+            int f = q.poll();
+            int s = q.poll();
+            if(f != s)
+            {
+            q.add(f-s);
+            }
+        }
+    if(q.size() !=0)
+    return q.peek();
+        return 0;
+    }
+}

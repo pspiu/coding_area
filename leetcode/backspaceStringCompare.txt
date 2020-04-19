@@ -1,0 +1,66 @@
+Link: https://leetcode.com/problems/backspace-string-compare/
+Title: Backspace String Compare
+Description: Given two strings S and T, return if they are equal when both are typed into empty text editors. # means a backspace character.
+Note that after backspacing an empty text, the text will continue empty.
+
+class Solution {
+
+    public boolean backspaceCompare(String S, String T) {
+        return build(S).equals(build(T));
+    }
+
+    public boolean backspaceCompare1(String S, String T) {
+    Stack<Character> stackForS = new Stack();
+    Stack<Character> stackForT = new Stack();
+        int garb;
+        
+        for(char c : S.toCharArray())
+        {
+        if(c == '#')
+        {
+            if(!stackForS.isEmpty())
+                 stackForS.pop();
+        }
+            else
+              stackForS.push(c);
+        
+        }
+       
+        for(char c : T.toCharArray())
+        {
+        if(c == '#')
+        {
+            if(!stackForT.isEmpty())
+                 stackForT.pop();
+        }
+            else
+              stackForT.push(c);
+        }       
+        
+        return stackForS.equals(stackForT);
+}
+
+    public boolean backspaceCompare2(String S, String T) {
+    Stack<Character> stackForS = new Stack();
+    Stack<Character> stackForT = new Stack();
+        int garb;
+        
+        for(char c : S.toCharArray())
+        garb = (c == '#' ? ( stackForS.isEmpty() ? ' ' : stackForS.pop()) : stackForS.push(c));
+        
+        for(char c : T.toCharArray())
+        garb = (c == '#' ? ( stackForT.isEmpty() ? ' ' : stackForT.pop()) : stackForT.push(c));
+        
+        return stackForS.equals(stackForT);
+}
+    public String build(String S) {
+        Stack<Character> ans = new Stack();
+        for (char c: S.toCharArray()) {
+            if (c != '#')
+                ans.push(c);
+            else if (!ans.empty())
+                ans.pop();
+        }
+        return String.valueOf(ans);
+    }
+}

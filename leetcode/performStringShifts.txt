@@ -1,0 +1,41 @@
+Link: https://leetcode.com/explore/other/card/30-day-leetcoding-challenge/529/week-2/3299/
+Topic: Perform String Shifts
+Description: You are given a string s containing lowercase English letters, and a matrix shift, where shift[i] = [direction, amount]:
+
+direction can be 0 (for left shift) or 1 (for right shift). 
+amount is the amount by which string s is to be shifted.
+A left shift by 1 means remove the first character of s and append it to the end.
+Similarly, a right shift by 1 means remove the last character of s and add it to the beginning.
+Return the final string after all operations.
+
+class Solution {
+    public String stringShift(String s, int[][] shift) {
+        int count=0;int j=0;
+        for(int i=0; i <shift.length; i++)
+        {
+         if(shift[i][0] ==0)
+             count+=shift[i][1];
+            else
+                count-=shift[i][1];
+        }
+        System.out.println("count value final "+count);
+       StringBuilder temp = new StringBuilder(s);  
+        String ans="";
+            if(count>0)
+            {
+               ans = s.substring(s.length()-count) + s.substring(0, s.length()-count); 
+           
+             
+            }
+        
+        else if(count <0)
+        {
+            ans = s.substring(count) + s.substring(0, count); 
+         
+            
+        }
+         return ans;
+                
+        }       
+    }
+
