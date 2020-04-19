@@ -1,0 +1,46 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        int res=-1;
+  //res= search(nums,0,nums.length-1,target);
+        HashMap<Integer,Integer> map = new HashMap();
+        
+        for(int i=0;i<nums.length;i++)
+            map.put(i,nums[i]);
+        
+        for(Map.Entry<Integer,Integer> ele: map.entrySet())
+            System.out.println(ele.getKey()+" "+ele.getValue());
+        
+        for(Integer key: map.keySet())
+            if(target ==map.get(key))
+                return key;
+        return -res;
+        
+    }
+
+public int search(int[] num, int low,int high,int target)
+{
+if (low > high) 
+            return -1;
+       
+        int mid = (low+high)/2;
+        if (num[mid] == target)
+            return mid;
+       
+        if (num[low] <= num[mid])
+        {
+          
+            if (target >= num[low] && target <= num[mid])
+               return search(num, low, mid-1, target);
+         
+            return search(num, mid+1, high, target);
+        }
+       
+       
+        if (target >= num[mid] && target <= num[high])
+            return search(num, mid+1, high, target);
+       
+        return search(num, low, mid-1, target);
+    }
+
+}
+
