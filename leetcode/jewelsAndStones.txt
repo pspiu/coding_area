@@ -1,0 +1,80 @@
+Topic: Jewels and Stones
+Link: https://leetcode.com/problems/jewels-and-stones/
+Description: You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
+
+The letters in J are guaranteed distinct, and all characters in J and S are letters. Letters are case sensitive, so "a" is considered a different type of stone from "A".
+
+Example 1:
+
+Input: J = "aA", S = "aAAbbbb"
+Output: 3
+Example 2:
+
+Input: J = "z", S = "ZZ"
+Output: 0
+Note:
+
+S and J will consist of letters and have length at most 50.
+The characters in J are distinct.
+
+
+Solution 1:
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        int jewel_count = 0 ;          
+        for(int i = 0 ; i < S.length() ; i++)
+            if(J.indexOf(S.charAt(i))!=-1)
+             jewel_count++; 
+        return jewel_count;
+    }
+}
+
+Solution 2:
+class Solution {
+    public int numJewelsInStones(String J, String S) { 
+        int jewel_num=0;
+        
+        Map<Character,Integer> map = new HashMap<Character,Integer>();
+        
+        //Put Stone String 'S' inside HashMap with count of each type of stone
+        for(Character stone:S.toCharArray())
+        {
+            if(!map.containsKey(stone))
+             map.putIfAbsent(stone,1);
+            else            
+             map.compute(stone, (key, val)->  val + 1); 
+         }
+        
+        System.out.println(map);
+        
+        //Iterate through each jewel form Jewels Array 'J' and find if it is present in map. If it is, get count of the jewel from the map and increment jewel_num
+        for(char jewel:J.toCharArray())
+        {
+           if(map.containsKey(jewel))
+               jewel_num+=map.get(jewel);
+        }
+        
+        return jewel_num;
+    }
+}
+
+
+Solution 3:
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+    
+     char[] jewel_char = J.toCharArray();
+        int count=0;
+        for(char jewel:jewel_char)
+        System.out.println(jewel);
+        for(int i=0;i<S.length();i++)
+        {
+            for(int j=0;j<jewel_char.length;j++)
+            {
+                if(S.charAt(i)==jewel_char[j])
+                    count++;
+            }
+        }
+        return count;
+    }
+}
