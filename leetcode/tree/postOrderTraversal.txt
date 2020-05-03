@@ -1,0 +1,97 @@
+Link: https://leetcode.com/explore/learn/card/data-structure-tree/134/traverse-a-tree/930/
+
+Solution 1: Recursive Solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+       List<Integer> ans = new ArrayList();
+        postorder(root,ans);     
+        return ans;        
+    }
+    
+    public void postorder(TreeNode root, List<Integer> ans)
+    {
+        if(root==null)
+            return;
+        if(root.left!=null)
+            postorder(root.left,ans);
+        if(root.right!=null)
+            postorder(root.right,ans);
+        ans.add(root.val);
+    }
+}
+
+Solution 2: Iterative Solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+       List<Integer> ans = new ArrayList();
+        if (root == null)            
+            return new ArrayList();
+          
+        // Create an empty stack and push root to it 
+        Stack<TreeNode> stack_rev = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<TreeNode>(); 
+        ArrayList<Integer> list=new ArrayList();
+        stack_rev.push(root); 
+  
+        /* Pop all items one by one. Do following for every popped item 
+         a) print it 
+         b) push its right child 
+         c) push its left child 
+         Note that right child is pushed first so that left is processed first */
+        while (stack_rev.empty() == false) { 
+              
+            // Pop the top item from stack and print it 
+            TreeNode node = stack_rev.pop(); 
+            stack.push(node);
+            
+            // Push right and left children of the popped node to stack 
+            if (node.left != null) { 
+                stack_rev.push(node.left); 
+            }
+  
+            if (node.right != null) { 
+                stack_rev.push(node.right); 
+            }
+        }
+        
+        //while(!stack.isEmpty())
+        //while(stack.size()!=0)
+        while(stack.size()>0)
+        {
+            TreeNode node = stack.pop();
+            ans.add(node.val);
+        }
+ 
+        return ans;        
+    }
+}
