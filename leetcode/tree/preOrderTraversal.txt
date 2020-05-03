@@ -1,0 +1,37 @@
+Solution 1: Recursive Solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+     //If we create this list 'preorderArray' inside method, during each recursive call, it is created as new list. (wrong)
+     List<Integer> preorderArray = new ArrayList<Integer>(); 
+      
+      public List<Integer> preorderTraversal(TreeNode root) {
+        
+        if(root==null) 
+            return new ArrayList();
+        preorderArray.add(root.val);
+        if(root.left!=null)
+            preorderTraversal(root.left);
+        if(root.right!=null)
+            preorderTraversal(root.right);
+                
+        preorderArray.forEach(ele->System.out.println(ele));
+        
+        return preorderArray;
+    }
+}
+
+Solution 2: Iterative solution with stack

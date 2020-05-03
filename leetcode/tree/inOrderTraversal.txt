@@ -1,0 +1,95 @@
+Topic: Inorder Traversal
+Link: https://leetcode.com/explore/learn/card/data-structure-tree/134/traverse-a-tree/929/
+
+Solution 1: Recursive solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    public List<Integer> inorderTraversal(TreeNode root) {
+       List<Integer> ans = new ArrayList();
+        if(root==null)
+            return ans;
+        inorder(root,ans);
+        return ans;
+        
+    }
+    public void inorder(TreeNode root, List<Integer> ans)
+    {
+         if(root==null)
+            return;
+        if(root.left!=null)
+            inorder(root.left,ans);
+        ans.add(root.val);
+        if(root.right!=null)
+            inorder(root.right,ans);
+    }
+}
+
+Solution 2: Iterative Solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    public List<Integer> inorderTraversal(TreeNode root) {
+       List<Integer> ans = new ArrayList();
+        if(root==null)
+            return ans;
+        Stack<TreeNode> s = new Stack<TreeNode>(); 
+        TreeNode curr = root; 
+  
+        // traverse the tree 
+        while (curr != null || s.size() > 0) 
+        { 
+  
+            /* Reach the left most Node of the 
+            curr Node */
+            while (curr !=  null) 
+            { 
+                /* place pointer to a tree node on 
+                   the stack before traversing 
+                  the node's left subtree */
+                s.push(curr); 
+                curr = curr.left; 
+            } 
+  
+            /* Current must be NULL at this point */
+            curr = s.pop(); 
+  
+           ans.add(curr.val);
+  
+            /* we have visited the node and its 
+               left subtree.  Now, it's right 
+               subtree's turn */
+            curr = curr.right; 
+        }
+        return ans;
+    }
+
+}
