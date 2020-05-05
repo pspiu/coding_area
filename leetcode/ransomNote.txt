@@ -89,3 +89,25 @@ class Solution {
         return true;
     }
 }
+
+
+Solution 4:
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+      //add magazine to StringBuilder
+        StringBuilder sb = new StringBuilder();
+        sb.append(magazine);        
+        int length = ransomNote.length(), count = 0;        
+        //iterate through ramsomNote String and delete occurence of its char from StringBuilder
+        for(int i=0;i<length;i++){
+            // "" req at the end o.w. error will come : char cannot be converted to String
+            int index = sb.indexOf(ransomNote.charAt(i)+"");
+            if(index != -1){
+                //index is inclusive whereas index+1 is exclusive
+                sb.delete(index, index+1);
+            }
+            else return false;
+        }
+        return true;
+    }
+}
