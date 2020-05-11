@@ -1,0 +1,129 @@
+Topic: Valid Perfect Square
+Link: https://leetcode.com/problems/valid-perfect-square/
+Description: Given a positive integer num, write a function which returns True if num is a perfect square else False.
+
+Note: Do not use any built-in library function such as sqrt.
+
+Example 1:
+
+Input: 16
+Output: true
+Example 2:
+
+Input: 14
+Output: false
+
+Soution 1: Binary Search while loop
+class Solution {
+    public boolean isPerfectSquare(int num)
+   {
+            if (num < 0) return false;
+            if (num == 0) return true;
+        
+           long left=1, right=Integer.MAX_VALUE;
+           
+       while (left <= right)
+            {
+                long mid = (left + right) / 2;
+                long midSqr = mid * mid;
+                if (midSqr == num) return true;
+                else if (midSqr > num) right = mid - 1;
+                else left = mid + 1;
+            }
+            return false;
+        }    
+}
+
+
+Soution 2: Binary Search recursive solution-1
+/*
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        if(num==0) return true;
+        return(binarySearch(num,1,Integer.MAX_VALUE));
+        }
+    public boolean binarySearch(double num, double left, double right)
+    {
+        if(left<=right)
+        {
+        double mid=left+(right-left)/2;
+        double midSquare= mid*mid;
+            if(num==midSquare) return true;
+            else if(num<midSquare)
+               return binarySearch(num,left,mid-1);
+            else
+                return binarySearch(num,mid+1,right);
+        }
+        
+        return false;
+    }
+}
+*/
+
+Soution 3: Binary Search recursive solution-2
+/*
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        if(num==0) return true;
+        return(binarySearch(num,1,Integer.MAX_VALUE));
+        }
+    public boolean binarySearch(double num, double left, double right)
+    {
+        if(left>right)
+        { return false;}
+        double mid=left+(right-left)/2;
+        double midSquare= mid*mid;
+            if(num==midSquare) return true;
+            else if(num<midSquare)
+               return binarySearch(num,left,mid-1);
+            else
+                return binarySearch(num,mid+1,right);
+
+    }
+}
+*/
+
+Soution 4: Math.sqrt solution
+/*
+class Solution {
+    public boolean isPerfectSquare(int num) {
+         double sr = Math.sqrt(num); 
+      
+        // If square root is an integer 
+        return ((sr - Math.floor(sr)) == 0); 
+        
+    }
+}
+*/
+
+Soution 5: Using property: Sum of first n odd numbers is a perfecr square
+/*
+class Solution {
+    public boolean isPerfectSquare(int num)
+       {
+       for (int sum = 0, i = 1; sum < num; i += 2) { 
+            sum += i; 
+            if (sum == num) 
+                return true; 
+        } 
+    return false;   
+    }     
+}
+*/
+
+Solution 6: Iterate though 1 to num and check if there is a number which divides num and gives quotient as itself and remainder as 0
+/*
+class Solution {
+    public boolean isPerfectSquare(int num) {
+       { 
+        for (int i = 1; i * i <= num; i++) { 
+
+            if ((num % i == 0) && (num / i == i)) { 
+                return true; 
+            } 
+        } 
+        return false; 
+    } 
+    }
+}
+*/

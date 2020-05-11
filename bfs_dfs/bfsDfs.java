@@ -96,3 +96,83 @@ class Graph
         g.BFS(0); 
     } 
 }
+
+Solution 2:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        //avoid null pointer exception
+        if(root ==null)
+            return res;
+        
+        //create Map containing <level, array of TreeNode val at a given level>
+       Map<Integer, List<Integer>> map = new HashMap();
+        dfs(root,0, map);
+        
+        //iterate though map and add list of treenode's values res(list of list of treenode val)   
+        for(Map.Entry<Integer,List<Integer>> entry : map.entrySet())
+            res.add(entry.getValue());
+        return res;
+    }
+    
+    void dfs(TreeNode root, int level, Map<Integer,List<Integer>> map)
+    {
+        if(root ==null)
+            return;
+        //add entry for a given level in the map
+        map.putIfAbsent(level, new ArrayList<>());
+        map.get(level).add(root.val);
+        dfs(root.left, level +1, map);
+        dfs(root.right, level +1, map);
+    }
+}
+
+Solution 3:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        //avoid null pointer exception
+        if(root ==null)
+            return res;
+
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
+        while(!q.isEmpty())
+        {
+            //create list and size fields for each level
+            List<Integer> level = new ArrayList<>();
+            int size = q.size();
+            for(int i=0;i<size;i++)
+            {
+                TreeNode ele =q.poll();
+                level.add(ele.val);
+                if(ele.left !=null)
+                    q.add(ele.left);
+                if(ele.right !=null)
+                    q.add(ele.right);               
+                
+            }
+            res.add(level);
+            
+        }
+        return res;
+    }
+}

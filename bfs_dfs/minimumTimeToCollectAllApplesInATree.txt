@@ -1,0 +1,106 @@
+Topic:  Minimum Time to Collect All Apples in a Tree
+Link: https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/
+Description: Given an undirected tree consisting of n vertices numbered from 0 to n-1, which has some apples in their vertices. You spend 1 second to walk over one edge of the tree. Return the minimum time in seconds you have to spend in order to collect all apples in the tree starting at vertex 0 and coming back to this vertex.
+
+The edges of the undirected tree are given in the array edges, where edges[i] = [fromi, toi] means that exists an edge connecting the vertices fromi and toi. Additionally, there is a boolean array hasApple, where hasApple[i] = true means that vertex i has an apple, otherwise, it does not have any apple.
+
+ 
+
+Example 1:
+
+
+
+Input: n = 7, edges = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]], hasApple = [false,false,true,false,true,true,false]
+Output: 8 
+Explanation: The figure above represents the given tree where red vertices have an apple. One optimal path to collect all apples is shown by the green arrows.  
+Example 2:
+
+
+
+Input: n = 7, edges = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]], hasApple = [false,false,true,false,false,true,false]
+Output: 6
+Explanation: The figure above represents the given tree where red vertices have an apple. One optimal path to collect all apples is shown by the green arrows.  
+Example 3:
+
+Input: n = 7, edges = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]], hasApple = [false,false,false,false,false,false,false]
+Output: 0
+ 
+
+Constraints:
+
+1 <= n <= 10^5
+edges.length == n-1
+edges[i].length == 2
+0 <= fromi, toi <= n-1
+fromi < toi
+hasApple.length == n
+
+
+Solution 1: Using DFS and no extra space (Time Limit Exceeds)
+class Solution {
+    int count;
+        public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+            if(n==0) return 0;
+            boolean[] visited= new boolean[n];
+            int count=dfs(0,n,edges,hasApple,visited);        
+        return count;
+    }
+    
+    public int dfs(int root, int numVertex, int[][] edge, List<Boolean>hasApple, boolean[] visited)
+    {        
+          count=0;
+          visited[root]=true;
+    
+        //find adj node and add it to dfs call
+        for(int i=0;i<edge.length;i++)
+        {
+            //time limit exceed because we are traversing edge[][] 2D array everytime time to find adj nodes
+            if(edge[i][0]==root && !visited[edge[i][1]])
+                count+=dfs(edge[i][1],numVertex,edge,hasApple,visited);  
+        }
+                
+        if(root==0)
+            return count;
+        return (count+((hasApple.get(root)||count>0)?2:0));      
+}
+}
+
+Solution 2: Using DFS and map as extra space for storing adj list
+class Solution {
+    public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+        List<List<Integer>> map = new ArrayList<>();
+        boolean[] visited = new boolean[n];
+        
+        // create map for all vertices 'n'
+        for(int i=0;i<n;i++)
+            map.add(new ArrayList<Integer>(0));
+        
+        //add edge from 'edges' for each vertex from 'n'
+        for(int[] e: edges)
+            map.get(e[0]).add(e[1]);
+        
+        return (dfs(map,visited,hasApple,0));       
+        
+    }
+    
+    public int dfs(List<List<Integer>> map, boolean[] visited, List<Boolean> hasApple,int root)
+    {
+        int result=0;
+        visited[root]=true;
+        
+        //find ajd ver from map, mark visited and call dsf() on adj vertex of 'root'
+        for(int i:map.get(root))
+            if(!visited[i])
+                result+=dfs(map,visited,hasApple,i);
+        
+        //if we reach at root after backtracking, return result(of apples found at that depth/path followed)       
+        if(root==0)
+            return result;
+        
+        // if we are not at root, if root has apple or result>0(means its child has apple that has returned a non-zero value to root), add +2 to result, o.w. add +0 (means no apple found in path)
+         // return result+((hasApple.get(root)||result>0)?2:0);
+        else if(hasApple.get(root) || result>0)
+            return result+=2;
+        return result;
+    }
+}
