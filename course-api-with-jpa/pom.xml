@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- priya: groupId: kind of namespace, package-name, artifact: name of 
+		project, -->
 	<groupId>springboot-practice</groupId>
 	<artifactId>course-api-with-jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -33,20 +35,21 @@
 	</dependencies>
 
 	<properties>
+	<!-- priya: version in format 14.0.2 not accepted -->
 		<java.version>14</java.version>
 	</properties>
 
 	<!-- Additional lines to be added here... -->
 	<build>
 		<plugins>
-			<!-- Building an executable jar -->
+			<!-- priya: plugin for maven build (o.w. executable jar will not be created); Building an executable jar -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<archive>
 						<manifest>
-							<!-- give full qualified name of your main class -->
+							<!-- priya: give full qualified name of your main class -->
 							<mainClass>springboot_practice.course_api_with_jpa.App</mainClass>
 
 						</manifest>
