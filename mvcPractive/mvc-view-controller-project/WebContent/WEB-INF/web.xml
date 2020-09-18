@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  priya: access on web as 'localhost:<tomcar port>/mvc-project/home.com/<uro-pattern defined in on of the controllers> -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<!--  priya: name of the java project: can be different from it -->
+	<display-name>mvc-project</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- priya: descriptor will always process fragments in the order they have written -->
+	<absolute-ordering />
+	<!-- provide entry of front-controller: all requests enter here: front-controller 
+		dispatches requests to other controllers -->
+	<servlet>
+		<!-- priya; by default, we need to create DS cofig file with the name given 
+			in <servlet-name> tag followed by "-servlet.xml -->
+		<servlet-name>dad-frontcontroller</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- priya: if we want to give a name different than dad-frontcontroller-servelt.xml 
+			for our DS config file <init-param> <param-name>contextConfigLocation</param-name> 
+			<param-value>/WEB_INF/<file name other than DS name></param-value> </init-param> -->
+		<!-- priya: required for loading the DispatcherServlet on start on server; 
+			spring finds DS frontcontroller in WEB-INF and creates web-app container 
+			by this name -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>dad-frontcontroller</servlet-name>
+		<url-pattern>/home.com/*</url-pattern>
+	</servlet-mapping>
+</web-app>
