@@ -34,7 +34,7 @@ public class TopicController {
 		 * priya: If path-variable provided in @RequestMapping is diff than the method
 		 * arg, padd the path var name in @PathVariable
 		 */
-		// public Topic getTopic(@PathVariable(""id) String id)
+		// public Topic getTopic(@PathVariable("id") String id)
 		return topicService.getTopic(id);
 	}
 

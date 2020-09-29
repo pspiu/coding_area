@@ -30,7 +30,7 @@ public class CourseService {
 
 	public List<Course> getAllCourses(String id) {
 		List<Course> course = new ArrayList<Course>();
-		courseRepository.findByTopicId(id).forEach(course::add);;
+		courseRepository.findByTopicId(id).forEach(course::add);
 		return course;
 	}
 

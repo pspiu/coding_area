@@ -6,6 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import springboot_practice.course_api_with_jpa.model.Course;
 
+/*
+ * requires 2 parameters: (in same order): Entity class name, Id type
+ */
 public interface CourseRepository extends CrudRepository<Course, String> {
 	public List<Course> findByName(String name);
 

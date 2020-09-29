@@ -32,7 +32,7 @@ public class CourseController {
 	}
 
 	@RequestMapping("/topics/{topicId}/courses/{courseId}")
-	public Optional<Course> getTopic(@PathVariable String courseId) {
+	public Optional<Course> getCourse(@PathVariable String courseId) {
 		/*
 		 * priya: If path-variable provided in @RequestMapping is diff than the method
 		 * arg, add the path var name in @PathVariable

@@ -21,7 +21,7 @@ public class TopicController {
 	private TopicService topicService;
 
 	/*
-	 * priya: generate JSON will jave key names corresponding to property names of
+	 * priya: generate JSON will have key names corresponding to property names of
 	 * Topic class and values are values of those properties
 	 */
 	@RequestMapping("/topics")
@@ -35,7 +35,7 @@ public class TopicController {
 		 * priya: If path-variable provided in @RequestMapping is diff than the method
 		 * arg, padd the path var name in @PathVariable
 		 */
-		// public Topic getTopic(@PathVariable(""id) String id)
+		// public Topic getTopic(@PathVariable("id") String id)
 		return topicService.getTopic(id);
 	}
 
