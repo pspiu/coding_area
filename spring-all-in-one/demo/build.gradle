@@ -1,0 +1,143 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'payroll'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '14'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.h2database:h2'
+	//compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas'
+	//HATEOAS or Hypermedia as the Engine of Application State
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testCompile 'com.jayway.jsonpath:json-path'
+	compile group: 'org.zalando', name: 'problem-spring-web'
+}
+
+test {
+	useJUnitPlatform()
+}
+/*
+# Getting Started
+
+Rest:
+What benefits? The web and its core protocol, HTTP, provide a stack of features:
+
+Suitable actions (GET, POST, PUT, DELETE​)
+
+Caching
+
+Redirection and forwarding
+
+Security (encryption and authentication)
+ As it turns out, REST isn’t just about pretty URIs and returning JSON instead of XML.
+
+Instead, the following tactics help make your services less likely to break existing clients you may or may not control:
+
+Don’t remove old fields. Instead, support them.
+
+Use rel-based links so clients don’t have to hard code URIs.
+
+Retain old links as long as possible. Even if you have to change the URI, keep the rels so older clients have a path onto the newer features.
+
+Use links, not payload data, to instruct clients when various state-driving operations are available.
+
+Annotations:
+
+@SpringBootApplication annotation. This tells Spring Boot to help out, wherever possible.
+
+@Entity @Id @GeneratedValue -JPA
+@Entity is a JPA annotation to make this object ready for storage in a JPA-based data store.
+
+@Configuration
+
+@Bean
+
+@RestController
+indicates that the data returned by each method will be written straight into the response body instead of rendering a template.
+
+
+We have routes for each operations:
+@GetMapping,
+ @PostMapping,
+ @PutMapping, 
+ @DeleteMapping, corresponding to HTTP GET, POST, PUT, and DELETE calls). 
+ 
+@RestController
+
+@Service
+
+@Configuration
+
+@ResponseBody signals that response is rendered straight into the response body.
+
+@ExceptionHandler configures the advice to only respond if an EmployeeNotFoundException is thrown.
+
+@ResponseStatus says to issue for example, an HttpStatus.NOT_FOUND, i.e. an HTTP 404.
+
+@Component
+
+Classes and interfaces:
+
+This tutorial is based on Spring MVC and uses the static helper methods from WebMvcLinkBuilder to build these links. If you are using Spring WebFlux in your project, you must instead use WebFluxLinkBuilder.
+
+EntityModel<T> is a generic container from Spring HATEOAS that includes not only the data but a collection of links.
+
+linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel() asks that Spring HATEOAS build a link to the EmployeeController 's one() method, and flag it as a self link.
+
+linkTo(methodOn(EmployeeController.class).all()).withRel("employees") asks Spring HATEOAS to build a link to the aggregate root, all(), and call it "employees".
+
+CollectionModel<> is another Spring HATEOAS container aimed at encapsulating collections. 
+
+Introducing Spring HATEOAS, a Spring project aimed at helping you write hypermedia-driven outputs.:
+ Spring HATEOAS’s RepresentationModelAssembler interface.
+ <dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-hateoas</artifactId>
+</dependency>
+
+
+Steps:
+1. Create Entity (for tables, spring data jpa)
+2. Create Controllers (for the epxosing the rest api) //can have Services (but for this project, logic of service is here only
+3. Create SpringBoot driver class
+4. Load (statically) data into the entities; create @Configuration (LoadDatabase; define @Bean in it to return CommandLineRunner (starts up when contexts build up)
+5. Create interface that extends JPARepository for all CRUD operations in JPA
+6. Create ControllerAdvice; annotate @ControllerAdvice,
+use @ResponseBody
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(EmployeeNotFoundException.class)
+7. Create Exception classes: for error handling. Extend RuntimeException
+
+Note: Check spring HATEOAS(Hypermedia as the Engine of Application State)
+ Instead of  clients parsing the payload, give them links to signal valid actions.
+ Decouple state-based actions from the payload of data. In other words, when
+ CANCEL and COMPLETE are valid actions, dynamically add them to the list of
+ links. Clients only need show users the corresponding buttons when the links
+  exist.This decouples clients from having to know WHEN such actions are valid,
+  reducing the risk of the server and its clients getting out of sync on the
+  logic of state transitions.
+8. Create a class that extends RepresentationModelAssembler and annotate @Componet that has toModel() to create ModelEntity
+WebMvcLinkBuilder for our project (for pasring welflux, it is WebFluxLinkBuilder) 
+9. CheckEntityModel, Collection Model in OrderContorller (they help in adding data as well as link to the return response)
+10 Check ResponseEntity in OrderController: it helps to wrap the EntityModel and sends it as repsonse. Also sends other things, for eg:
+in case of error, 	
+return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+				.header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
+				.body(Problem.create().withTitle("Method not allowed")
+						.withDetail("You can't cancel an order that is in the " + order.getStatus() + " status"));
+	}
+	*/
